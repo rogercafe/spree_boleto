@@ -3,7 +3,7 @@ Spree::CheckoutController.class_eval do
   def object_params
     if @order.payment?
       return original_object_params unless params[:order][:payments_attributes].first[:payment_method_id].to_i == Spree::Order.boleto_payment_method.id
-      instalments = params[:order][:instalments].to_i
+      instalments = 1
       instalment_amount = (@order.total/instalments.to_i)
       payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
       params[:order][:payments_attributes] = []
@@ -18,13 +18,14 @@ Spree::CheckoutController.class_eval do
           :state => "pending",
           :source_attributes => {
             :order_id => @order.id,
-            :due_date => Date.today + index.month + Spree::Boleto::Configuration.preferences[:dias_vencimento],
+            :due_date => Date.today + index.month + 3,
             :amount => amount,
             :status => "pending"
           }
         }
       end
     end
+    params[:order].delete(:state)
     params[:order]
   end
 end
