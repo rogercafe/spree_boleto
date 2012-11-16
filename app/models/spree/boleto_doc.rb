@@ -20,7 +20,7 @@ module Spree
       per_page = prefs.delete(:per_page)
       @boleto = "Brcobranca::Boleto::#{banco}".constantize.new(prefs)
       @boleto.sacado = order.name
-      @boleto.valor = payment.amount
+      @boleto.valor = order.payment_total
       @boleto.numero_documento = id
       @boleto.data_documento = Date.today
       @boleto.sacado_endereco = order.bill_address.full_address

@@ -1,5 +1,7 @@
 Spree::CheckoutController.class_eval do
   alias_method :original_object_params, :object_params
+  
+  
   def object_params
     if @order.payment?
       return original_object_params unless params[:order][:payments_attributes].first[:payment_method_id].to_i == Spree::Order.boleto_payment_method.id
@@ -23,6 +25,8 @@ Spree::CheckoutController.class_eval do
             :status => "pending"
           }
         }
+        boleto = Spree::BoletoDoc.new
+        boleto.process! @order.payment
       end
     end
     params[:order].delete(:state)
