@@ -23,7 +23,7 @@ module Spree
     end
     
     def show
-      @boleto_doc = @order.boleto_docs.find(params[:id])
+      @boleto_doc = @order.boleto_docs.first
       @boleto = @boleto_doc.payload
       respond_to do |format|
         format.html
