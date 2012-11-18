@@ -20,6 +20,7 @@ module Spree
       @boleto.sacado = order.name
       @boleto.sacado_documento = "12345678900"
       @boleto.valor = order.payment_total
+      @boleto.valor_documento = "R$ #{order.payment_total}"
       @boleto.agencia = "4042"
       @boleto.convenio = "1238798"
       @boleto.numero_documento = "102008"
@@ -33,15 +34,20 @@ module Spree
       @boleto.instrucao5 = "Após vencimento pagável somente nas agências do Banco do Brasil"
       @boleto.instrucao6 = "ACRESCER R$ 4,00 REFERENTE AO BOLETO BANCÁRIO"
       @boleto.sacado_endereco = order.bill_address.full_address
-      @boleto.vencimento_fixo = due_date
+      @boleto.vencimento_fixo = 1.days.from_now
       self.payload = @boleto
       self.document_number = @boleto.numero_documento
+      self.status = "pending"
       save
-      #payment.pend
+      order.payment.pend
     end
     
     def actions
       %w{capture void}
+    end
+
+    def pending?
+      status == "pending"
     end
 
     # Indicates whether its possible to capture the payment

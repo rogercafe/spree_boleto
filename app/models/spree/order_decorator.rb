@@ -1,5 +1,6 @@
 Spree::Order.class_eval do
-  has_many :boleto_docs
+  has_one :boleto_doc
+
   Spree::Order.state_machine.before_transition :to => :confirm,
                                                :do => :generate_boleto
   
@@ -16,6 +17,6 @@ Spree::Order.class_eval do
   end
 
   def generate_boleto
-    boleto_docs.first.proccess!
+    boleto_doc.proccess!
   end
 end

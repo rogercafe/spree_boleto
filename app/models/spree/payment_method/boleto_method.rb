@@ -15,7 +15,6 @@ module Spree
 
     def authorize amount, source, gateway_options
       logger.debug("Authorizing Payment: amount => #{amount}, source => #{source}, gateway_options => #{gateway_options}")
-      source.proccess!
       Spree::Response.new(true, "Boletos são autorizados automaticamente")
     end
   end

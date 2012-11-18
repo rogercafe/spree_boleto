@@ -8,23 +8,19 @@ module Spree
     layout "spree/layouts/print_layout"
     
     def index
-      @boletos = []
-      @order.boleto_docs.pending.each do |boleto_doc|
-        @boletos << boleto_doc.payload
-      end
+      @boleto = @order.boleto_doc.payload
       respond_to do |format|
         format.html
         format.pdf do
           formato = "pdf"
           headers['Content-Type']= PaymentMethod::BoletoMethod::FORMATS[formato]
-          send_data Brcobranca::Boleto::Base.lote(@boletos), :filename => "boletos_#{@order.number}.#{formato}", :disposition => "attachment", :type => PaymentMethod::BoletoMethod::FORMATS[formato]
+          send_data @boleto.to(formato), :filename => "boletos_#{@order.number}.#{formato}", :disposition => "attachment", :type => PaymentMethod::BoletoMethod::FORMATS[formato]
         end
       end
     end
     
     def show
-      @boleto_doc = @order.boleto_docs.first
-      @boleto = @boleto_doc.payload
+      @boleto = @order.boleto_doc.payload
       respond_to do |format|
         format.html
         format.pdf do
