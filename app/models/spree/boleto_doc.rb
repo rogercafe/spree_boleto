@@ -19,7 +19,7 @@ module Spree
       @boleto.documento_cedente = "12345678912"
       @boleto.sacado = order.name
       @boleto.sacado_documento = "12345678900"
-      @boleto.valor = order.payment_total
+      @boleto.valor = order.total
       @boleto.agencia = "4042"
       @boleto.convenio = "1238798"
       @boleto.numero_documento = "102008"

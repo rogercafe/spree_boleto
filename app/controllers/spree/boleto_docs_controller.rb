@@ -26,12 +26,12 @@ module Spree
         format.pdf do
           formato = "pdf"
           headers['Content-Type']= PaymentMethod::BoletoMethod::FORMATS[formato]
-          send_data @boleto.to(formato), :filename => "boleto_#{@boleto_doc.order.number}_#{@boleto_doc.id}.#{formato}", :disposition => "attachment", :type => PaymentMethod::BoletoMethod::FORMATS[formato]
+          send_data @boleto.to(formato), :filename => "boleto_#{@order.number}.#{formato}", :disposition => "attachment", :type => PaymentMethod::BoletoMethod::FORMATS[formato]
         end
         format.image do
           formato = "jpg"
           headers['Content-Type']= PaymentMethod::BoletoMethod::FORMATS[formato]
-          send_data @boleto.to(formato), :filename => "boleto_#{@boleto_doc.order.number}_#{@boleto_doc.id}.#{formato}", :disposition => 'inline', :type => PaymentMethod::BoletoMethod::FORMATS[formato]
+          send_data @boleto.to(formato), :filename => "boleto_#{@order.number}.#{formato}", :disposition => 'inline', :type => PaymentMethod::BoletoMethod::FORMATS[formato]
         end
       end
     end
