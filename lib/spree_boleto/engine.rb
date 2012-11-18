@@ -6,6 +6,10 @@ module Spree
       initializer "spree.register.boleto_method", after: "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods << Spree::PaymentMethod::BoletoMethod
       end
+
+      initializer "spree.spree_boleto.preferences", :after => "spree.environment" do |app|
+        Spree::Boleto::Config = Spree::SpreeBoletoConfiguration.new
+      end
           
       config.autoload_paths += %W(#{config.root}/lib)
     

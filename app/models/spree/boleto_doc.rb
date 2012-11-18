@@ -15,23 +15,23 @@ module Spree
 
     def proccess!
       @boleto = Brcobranca::Boleto::Bradesco.new
-      @boleto.cedente = "Nome loja" 
-      @boleto.documento_cedente = "12345678912"
+      @boleto.cedente = Spree::Boleto::Config.preferred(:cedente)
+      @boleto.documento_cedente = Spree::Boleto::Config.preferred(:documento_cedente)
       @boleto.sacado = order.name
-      @boleto.sacado_documento = "12345678900"
+      @boleto.sacado_documento = Spree::Boleto::Config.preferred(:sacado_documento)
       @boleto.valor = order.total
-      @boleto.agencia = "4042"
-      @boleto.convenio = "1238798"
-      @boleto.numero_documento = "102008"
-      @boleto.conta_corrente = "61900"
-      @boleto.dias_vencimento = 5
+      @boleto.agencia = Spree::Boleto::Config.preferred(:agencia)
+      @boleto.convenio = Spree::Boleto::Config.preferred(:convenio)
+      @boleto.numero_documento = Spree::Boleto::Config.preferred(:numero_documento)
+      @boleto.conta_corrente = Spree::Boleto::Config.preferred(:conta_corrente)
+      @boleto.dias_vencimento = Spree::Boleto::Config.preferred(:dias_vencimento)
       @boleto.data_documento = Date.today
-      @boleto.instrucao1 = "Pagável na rede bancária até a data de vencimento."
-      @boleto.instrucao2 = "Juros de mora de 2.0% mensal(R$ 0,09 ao dia)"
-      @boleto.instrucao3 = "DESCONTO DE R$ 29,50 APÓS 05/11/2006 ATÉ 15/11/2006"
-      @boleto.instrucao4 = "NÃO RECEBER APÓS 15/11/2006"
-      @boleto.instrucao5 = "Após vencimento pagável somente nas agências do Banco do Brasil"
-      @boleto.instrucao6 = "ACRESCER R$ 4,00 REFERENTE AO BOLETO BANCÁRIO"
+      @boleto.instrucao1 = Spree::Boleto::Config.preferred(:instrucao1)
+      @boleto.instrucao2 = Spree::Boleto::Config.preferred(:instrucao2)
+      @boleto.instrucao3 = Spree::Boleto::Config.preferred(:instrucao3)
+      @boleto.instrucao4 = Spree::Boleto::Config.preferred(:instrucao4)
+      @boleto.instrucao5 = Spree::Boleto::Config.preferred(:instrucao5)
+      @boleto.instrucao6 = Spree::Boleto::Config.preferred(:instrucao6)
       @boleto.sacado_endereco = order.bill_address.full_address
       @boleto.vencimento_fixo = 1.days.from_now
       self.payload = @boleto

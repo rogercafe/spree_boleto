@@ -1,9 +1,8 @@
 <% if @order.payment_method.instance_of? Spree::PaymentMethod::BoletoMethod %>
   <!-- TODO: Don't talk to strangers. This line should be something close to @order.pending_boleto? -->
   <% if @order.boleto_doc.pending? %>
-		<p>pago: <%= number_to_currency @order.payment_total %></p>
 		<p>pendente: <%= number_to_currency @order.outstanding_balance %></p>
-		<%= link_to "ver boletos pendentes", order_boleto_docs_path(@order.number), :class => "btn btn-primary" %>
+    <%= link_to "Imprimir Boleto", order_boleto_docs_path(@order.number), :target => "_blank", :class => "btn btn-primary" %>
   <% else %>
     Este pedido foi pago via Boleto
   <% end %>
